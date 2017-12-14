@@ -1,3 +1,5 @@
-atlas {
-  name = "alisdair-v2/milkdiarmid"
+terraform {
+  backend "atlas" {
+    name = "alisdair-v2/milkdiarmid"
+  }
 }

@@ -10,6 +10,14 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
+variable "dnsimple_account" {
+  type = "string"
+}
+
+variable "dnsimple_token" {
+  type = "string"
+}
+
 variable "web_count" {
   default = 1
 }
@@ -36,4 +44,17 @@ output "public_ip" {
 
 output "public_dns" {
   value = ["${aws_instance.web.*.public_ip}"]
+}
+
+provider "dnsimple" {
+  account = "${var.dnsimple_account}"
+  token = "${var.dnsimple_token}"
+}
+
+resource "dnsimple_record" "milkdiarmid" {
+  domain = "milkdiarmid.com"
+  type = "A"
+  name = "www"
+  ttl = 60
+  value = "${element(aws_instance.web.*.public_ip, count.index)}"
 }

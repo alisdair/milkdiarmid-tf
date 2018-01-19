@@ -1,3 +1,3 @@
 variable "web_count" {
-  default = 0
+  default = 3
 }
